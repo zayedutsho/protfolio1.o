@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaBars, FaTimes } from "react-icons/fa"
+import { BsDownload } from 'react-icons/bs'
 
 const NavBar = () => {
 
@@ -18,7 +19,6 @@ const NavBar = () => {
         {
             id: 2,
             link: "About",
-            add: "About.jsx"
 
 
         },
@@ -35,8 +35,33 @@ const NavBar = () => {
 
         },
 
+        {
+
+            id: 5,
+            link: "Resume",
+            href: "/Final_Resume_Utsho.pdf",
+            download: true,
+        }
+
 
     ]
+
+
+    // Function will execute on click of button
+    const onButtonClick = () => {
+        // using Java Script method to get PDF file
+        fetch('SamplePDF.pdf').then(response => {
+            response.blob().then(blob => {
+                // Creating new object of PDF file
+                const fileURL = window.URL.createObjectURL(blob);
+                // Setting various property values
+                let alink = document.createElement('a');
+                alink.href = fileURL;
+                alink.download = 'Final_Resume_Utsho.pdf';
+                alink.click();
+            })
+        })
+    }
 
 
     return (
@@ -47,12 +72,22 @@ const NavBar = () => {
 
             <ul className=' hidden md:flex'>
 
-                {links.map(({ link, id, add }) => (
+                {links.map(({ link, id, href, download, }) => (
                     <li key={id} className='px-4 cursor-pointer font-medium text-emerald-100  hover:scale-150 duration-200'
-                    >     <a href={add}>  {link}</a>
+                    >
+                        <a href={href}
+                            download={download}
+                            target="_blank"
+                            rel="noreferrer"
+                        >{link}</a>
+
+
+
                     </li>
 
+
                 ))}
+
 
 
 
@@ -84,12 +119,19 @@ const NavBar = () => {
 
                         ))}
 
+                        <button onClick={onButtonClick}>
+                            {BsDownload}
+                        </button>
 
 
                     </ul>
 
+
+
+
                 )
             }
+
 
 
 

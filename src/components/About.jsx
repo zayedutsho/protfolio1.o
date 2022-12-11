@@ -1,15 +1,34 @@
 import React from "react";
+import { BsDownload } from 'react-icons/bs'
+
 
 const About = () => {
+
+
+    // Function will execute on click of button
+    const onButtonClick = () => {
+        // using Java Script method to get PDF file
+        fetch('SamplePDF.pdf').then(response => {
+            response.blob().then(blob => {
+                // Creating new object of PDF file
+                const fileURL = window.URL.createObjectURL(blob);
+                // Setting various property values
+                let alink = document.createElement('a');
+                alink.href = fileURL;
+                alink.download = 'Final_Resume_Utsho.pdf';
+                alink.click();
+            })
+        })
+    }
     return (
         <div
             name="about"
-            className=" py-5 w-full h-screen bg-gradient-to-r from-zinc-900  to-purple-900 text-white"
+            className=" py-5 p-4 w-full h-screen bg-gradient-to-r from-zinc-900  to-purple-900 text-white"
         >
             <div className="max-w-screen-lg p-4 mx-auto flex flex-col justify-center w-full h-full">
                 <div className="pb-8">
                     <p className="text-4xl font-bold inline border-b-4 border-gray-500">
-                        About
+                        About ME
                     </p>
                 </div>
 
@@ -22,14 +41,12 @@ const About = () => {
 
                 <br />
 
-                <p className="text-xl">
-                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laborum
-                    pariatur, vel similique sint, nobis aspernatur ut praesentium
-                    explicabo ipsam aliquid quasi laboriosam et culpa possimus repudiandae
-                    quisquam ullam maiores ab unde. Fugiat odio mollitia nemo alias.
-                    Commodi facilis atque nulla vero voluptatem explicabo. Quibusdam,
-                    magni quo! Eum cupiditate debitis labore.
-                </p>
+                <button onClick={onButtonClick} className="bg-black text-white p-5" >
+                    Download Resume  <span>                    {BsDownload}
+                    </span>
+
+                </button>
+
             </div>
         </div>
     );
